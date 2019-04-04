@@ -1,6 +1,9 @@
-import React from 'react';
+/** @jsx jsx */
+import {
+  jsx
+} from '@emotion/core';
+
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

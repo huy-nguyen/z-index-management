@@ -1,28 +1,65 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+/** @jsx jsx */
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+import { jsx } from '@emotion/core'
+import styled from '@emotion/styled';
+import Partition, {
+} from './Partition';
+import {
+  TooltipPointingDirection,
+} from './Tooltip';
+
+export enum GridArea {
+  A = 'A',
+  B = 'B',
+  C = 'C',
+}
+
+const Root = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2vmin;
+  grid-template-areas:
+    "${GridArea.A} ${GridArea.A} ${GridArea.B}"
+    "${GridArea.C} ${GridArea.C} ${GridArea.B}";
+`;
+
+const App = () => {
+  const zIndices = {
+    A: 10,
+    B: 20,
+    C: 30,
   }
+  return (
+    <Root>
+      <Partition
+        color='#1b9e77'
+        label='A'
+        tooltipContent={'A'}
+        gridArea={GridArea.A}
+        tooltipPointingDirection={TooltipPointingDirection.Up}
+        zIndex={zIndices.A}
+      />
+      <Partition
+        color='#d95f02'
+        label='B'
+        tooltipContent={'B'}
+        gridArea={GridArea.B}
+        tooltipPointingDirection={TooltipPointingDirection.Right}
+        zIndex={zIndices.B}
+      />
+      <Partition
+        color='#7570b3'
+        label='C'
+        tooltipContent={'C'}
+        gridArea={GridArea.C}
+        tooltipPointingDirection={TooltipPointingDirection.Down}
+        zIndex={zIndices.C}
+      />
+    </Root>
+  );
 }
 
 export default App;

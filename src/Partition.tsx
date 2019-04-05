@@ -31,20 +31,24 @@ interface Props {
   tooltipContent: string
   tooltipPointingDirection: TooltipPointingDirection
   gridArea: GridArea
-  zIndex: number
+  getZIndex: () => number
+  promoteZIndex: () => void
+  restoreZIndex: () => void
 }
 
 const Partition = (props: Props) => {
   const {
-    color, gridArea, label, zIndex,
+    color, gridArea, label, promoteZIndex, restoreZIndex, getZIndex,
     tooltipContent, tooltipPointingDirection,
   } = props;
   const [isTooltipShown, setIsTooltipShown] = useState<boolean>(false);
   const onMouseEnter = () => {
+    promoteZIndex();
     setIsTooltipShown(true);
   }
   const onMouseLeave = () => {
     setIsTooltipShown(false);
+    restoreZIndex();
   }
   let tooltip: React.ReactElement<any> | null;
   if (isTooltipShown === true) {
@@ -63,7 +67,7 @@ const Partition = (props: Props) => {
       css={css`
         background-color: ${color};
         grid-area: ${gridArea};
-        z-index: ${zIndex};
+        z-index: ${getZIndex()};
       `}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

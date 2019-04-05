@@ -7,6 +7,7 @@ import Partition, {
 import {
   TooltipPointingDirection,
 } from './Tooltip';
+import usePromotableZIndex from './usePromotableZIndex';
 
 export enum GridArea {
   A = 'A',
@@ -32,6 +33,10 @@ const App = () => {
     B: 20,
     C: 30,
   }
+  const {getZIndex, promoteZIndex, restoreZIndex} = usePromotableZIndex({
+    normalZIndices: zIndices,
+    promotedZIndex: 100,
+  })
   return (
     <Root>
       <Partition
@@ -40,7 +45,9 @@ const App = () => {
         tooltipContent={'A'}
         gridArea={GridArea.A}
         tooltipPointingDirection={TooltipPointingDirection.Up}
-        zIndex={zIndices.A}
+        getZIndex={() => getZIndex('A')}
+        promoteZIndex={() => promoteZIndex('A')}
+        restoreZIndex={restoreZIndex}
       />
       <Partition
         color='#d95f02'
@@ -48,7 +55,9 @@ const App = () => {
         tooltipContent={'B'}
         gridArea={GridArea.B}
         tooltipPointingDirection={TooltipPointingDirection.Right}
-        zIndex={zIndices.B}
+        getZIndex={() => getZIndex('B')}
+        promoteZIndex={() => promoteZIndex('B')}
+        restoreZIndex={restoreZIndex}
       />
       <Partition
         color='#7570b3'
@@ -56,7 +65,9 @@ const App = () => {
         tooltipContent={'C'}
         gridArea={GridArea.C}
         tooltipPointingDirection={TooltipPointingDirection.Down}
-        zIndex={zIndices.C}
+        getZIndex={() => getZIndex('C')}
+        promoteZIndex={() => promoteZIndex('C')}
+        restoreZIndex={restoreZIndex}
       />
     </Root>
   );
